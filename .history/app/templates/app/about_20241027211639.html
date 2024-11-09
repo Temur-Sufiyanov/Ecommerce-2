@@ -1,0 +1,198 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    About Us
+{% endblock title %}
+
+{% block content %}
+<div class="about-container">
+    <h1>About Us</h1>
+    <p class="intro">Welcome to <strong>ShopSphere</strong>, your go-to source for <strong>all types of products</strong>. Our passion for quality and customer satisfaction drives us to provide the best shopping experience.</p>
+
+    <div class="story-section">
+        <h2>Our Story</h2>
+        <p>Founded in 2024 by <strong>Temur</strong>, ShopSphere has evolved from a small venture into a thriving community focused on sustainable eCommerce. Our mission is to foster customer loyalty through quality products and excellent service.</p>
+    </div>
+
+    <div class="mission-section">
+        <h2>Our Mission</h2>
+        <p>At <strong>ShopSphere</strong>, we aim to empower conscious consumers by offering sustainable, high-quality products that contribute to a healthier planet. Every purchase helps support a more sustainable future.</p>
+    </div>
+
+    <div class="why-choose-us-section">
+        <h2>Why Choose Us?</h2>
+        <div class="reasons">
+            <div class="reason-card">
+                <h3>🌱 Quality Products</h3>
+                <p>We carefully curate our selection to ensure the highest quality and sustainability.</p>
+            </div>
+            <div class="reason-card">
+                <h3>💬 Exceptional Service</h3>
+                <p>Our dedicated team is here to assist you with any questions or concerns.</p>
+            </div>
+            <div class="reason-card">
+                <h3>🚚 Fast Shipping</h3>
+                <p>We prioritize quick processing and delivery, because we know you want your items ASAP.</p>
+            </div>
+            <div class="reason-card">
+                <h3>🤝 Community Focused</h3>
+                <p>We believe in giving back to our community and supporting local initiatives.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="team-section">
+        <h2>Meet Our Technical Team</h2>
+        <div class="team-members">
+            <div class="team-member">
+                <img src="{% static 'app/images/Feruz.jpg' %}" alt="Feruz Juraev">
+                <h3>Feruz Juraev</h3>
+                <p>Web Developer & UI/UX Designer</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'app/images/Farrukh.jpg' %}" alt="Farrukh Abdurakhmonov">
+                <h3>Farrukh Abdurakhmonov</h3>
+                <p>Mobile Developer & UI/UX Designer</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'app/images/Asliddin.jpg' %}" alt="Asliddin Choriyev">
+                <h3>Asliddin Choriyev</h3>
+                <p>Data Analyst & SEO Specialist</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="community-section">
+        <h2>Join Our Community</h2>
+        <p>Stay updated on our latest products, promotions, and events by following us on social media. Let’s connect!</p>
+    </div>
+
+    <div class="contact-section">
+        <h2>Contact Us</h2>
+        <p>If you have any questions, feel free to reach out to us at <a href="mailto:temursufiyanov@gmail.com">temursufiyanov@gmail.com</a> or visit our <a href="{% url 'contact' %}">Contact Us</a> page.</p>
+    </div>
+
+    <p class="thank-you">Thank you for choosing <strong>ShopSphere</strong>! We appreciate your support and look forward to serving you.</p>
+</div>
+
+<style>
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+        background-color: #f4f7fa;
+        color: #4a4a4a;
+        line-height: 1.6;
+    }
+
+    .about-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s;
+    }
+
+    .about-container:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+        font-size: 2.8em;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2.2em;
+        margin-top: 30px;
+        font-size: 2.5rem;
+        color: #3498db;
+    }
+
+    p.intro {
+        font-size: 1.3em;
+        text-align: center;
+        margin: 10px 0 30px;
+        line-height: 1.5;
+    }
+
+    .story-section, .mission-section, .community-section, .contact-section {
+        margin-top: 30px;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+    }
+
+    .why-choose-us-section {
+        margin-top: 30px;
+    }
+
+    .reasons {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .reason-card {
+        flex: 1 1 calc(45% - 20px);
+        background: #eaf6f0;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .reason-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-section {
+        margin-top: 30px;
+    }
+
+    .team-members {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .team-member {
+        text-align: center;
+        margin: 20px;
+        max-width: 200px;
+    }
+
+    .team-member img {
+        width: 100%;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .thank-you {
+        text-align: center;
+        margin-top: 40px;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    @media (max-width: 768px) {
+        .reasons {
+            flex-direction: column;
+            align-items: center;
+        }
+        .reason-card {
+            flex: 1 1 80%;
+        }
+        .team-members {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+{% endblock content %}

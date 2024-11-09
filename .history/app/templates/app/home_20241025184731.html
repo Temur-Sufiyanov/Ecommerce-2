@@ -1,0 +1,98 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block banner_slider %}
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'app/images/banner/b1.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b4.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b3.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b5.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b6.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b7.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b8.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+  </div>
+{% endblock banner_slider %}
+
+{% block information %}
+<div class="container my-5">
+    <div class="row bg-light p-5 rounded shadow-sm">
+        <div class="col-md-6">
+            <img src="{% static 'app/images/logo-color.png' %}" class="img-fluid rounded" alt="About Us Image">
+        </div>
+        <div class="col-md-6">
+            <h2 class="mb-4">Welcome to ShopSphere</h2>
+            <p class="text-muted">We are committed to providing you with a unique shopping experience. From handpicked collections to exclusive deals, we’re here to make online shopping delightful and convenient.</p>
+            <ul class="list-unstyled my-4">
+                <li><i class="fas fa-check-circle text-success me-2"></i> Wide range of premium products</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Fast and secure checkout process</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Customer support available 24/7</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Sustainable and eco-friendly options</li>
+            </ul>
+            <a  href="#" btn-primary data-mdb-ripple-init data-mdb-ripple-color="dark">Shop Now</a>
+        </div>
+    </div>
+</div>
+{% endblock information %}
+    
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-5">Our Products</h2>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <!-- Product Card Start -->
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title">Product Name</h5>
+                    <p class="card-text">$29.99</p>
+                    <a href="#" class="btn btn-outline-secondary w-100" data-mdb-ripple-init data-mdb-ripple-color="dark">View Product</a>
+                </div>
+            </div>
+        </div>
+        <!-- Product Card End -->
+    </div>
+</div>
+<div class="container my-5">
+    <h2 class="text-center mb-5">Our Featured Products</h2>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <!-- Product Card Start -->
+        <div class="col">
+            <div class="card product-card shadow-sm">
+                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title">Stylish Product</h5>
+                    <p class="card-text">$29.99</p>
+                    <a href="#" class="btn btn-primary w-100">Add to Cart</a>
+                </div>
+                <a href="#" class="btn btn-view">Quick View</a>
+            </div>
+        </div>
+        <!-- Product Card End -->
+    </div>
+</div>
+{% endblock content %}
+    

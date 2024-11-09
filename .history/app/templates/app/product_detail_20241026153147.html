@@ -1,0 +1,69 @@
+{% extends "app/base.html" %}  
+{% load static %}
+{% block content %}
+<div class="product-detail-container">
+    <div class="hero-image">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>
+
+    <div class="product-info">
+        <h1>{{ product.name }}</h1>
+        <p class="price">${{ product.price }}</p>
+        {% if product.discount_price %}
+            <p class="discount-price">Save {{ product.discount_price }}%!</p>
+        {% endif %}
+        <p class="description">{{ product.description }}</p>
+
+        <form method="POST" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+            <button type="button" class="btn btn-secondary">Buy Now</button>
+        </form>
+        
+        <div class="availability">Availability: {{ product.availability }}</div>
+        
+        <div class="ratings">
+            <span>⭐⭐⭐⭐☆ (4.0 based on 20 reviews)</span>
+        </div>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab(event, 'description')">Description</button>
+        <button class="tab-button" onclick="openTab(event, 'specifications')">Specifications</button>
+        <button class="tab-button" onclick="openTab(event, 'reviews')">Reviews</button>
+    </div>
+
+    <div id="description" class="tab-content active">
+        <h3>Product Description</h3>
+        <p>{{ product.long_description }}</p>
+    </div>
+    
+    <div id="specifications" class="tab-content">
+        <h3>Specifications</h3>
+        <ul>
+            <li>Weight: {{ product.weight }} kg</li>
+            <li>Dimensions: {{ product.dimensions }} cm</li>
+            <!-- Add more specifications as needed -->
+        </ul>
+    </div>
+
+    <div id="reviews" class="tab-content">
+        <h3>Customer Reviews</h3>
+        <p>No reviews yet. Be the first to review this product!</p>
+        <!-- You can loop through actual reviews here if available -->
+    </div>
+
+    <h3>Related Products</h3>
+    <div class="related-products">
+        {% for related_product in related_products %}
+            <div class="related-product-card">
+                <a href="{% url 'product_detail' related_product.product_slug %}">
+                    <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+                    <h4>{{ related_product.name }}</h4>
+                    <p>${{ related_product.price }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

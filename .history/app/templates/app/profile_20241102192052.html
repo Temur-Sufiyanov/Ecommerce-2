@@ -1,0 +1,135 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}
+    Profile
+{% endblock title %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="card shadow-lg p-4" style="max-width: 600px; width: 100%; border-radius: 15px;">
+            <h3 class="text-center mb-4">Profile</h3>
+
+            <!-- Profile Details Display Section -->
+            <div id="profile-view" class="mb-4">
+                    
+                <h5 class="text-primary">Profile Information</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Name:</strong> {{ customer.name }}</li>
+                    <li class="list-group-item"><strong>Country:</strong> {{ customer.country }}</li>
+                    <li class="list-group-item"><strong>City:</strong> {{ customer.city }}</li>
+                    <li class="list-group-item"><strong>Mobile:</strong> {{ customer.mobile }}</li>
+                    <li class="list-group-item"><strong>Zipcode:</strong> {{ customer.zipcode }}</li>
+                </ul>
+                <div class="d-flex justify-content-between mt-3">
+                    <button class="btn btn-primary w-50" onclick="toggleEdit()">Edit Profile</button>
+                    <button class="btn btn-success w-50 ms-2" onclick="toggleAdd()">Add Info</button>
+                </div>
+            </div>
+
+            <!-- Profile Edit Form Section -->
+            <div id="profile-edit" class="d-none">
+                <h5 class="text-primary">Edit Profile</h5>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.country.label_tag }}
+                        {{ form.ciuntry }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.city.label_tag }}
+                        {{ form.city }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.mobile.label_tag }}
+                        {{ form.mobile }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.zipcode.label_tag }}
+                        {{ form.zipcode }}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-3">
+                        <button type="submit" class="btn btn-success w-50">Save Changes</button>
+                        <button type="button" class="btn btn-secondary w-50 ms-2" onclick="toggleEdit()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Profile Add Form Section -->
+            <div id="profile-add" class="d-none">
+                <h5 class="text-primary">Add New Info</h5>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.country.label_tag }}
+                        {{ form.ciuntry }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.city.label_tag }}
+                        {{ form.city }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.mobile.label_tag }}
+                        {{ form.mobile }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.zipcode.label_tag }}
+                        {{ form.zipcode }}
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <button type="submit" class="btn btn-primary w-50">Add Info</button>
+                        <button type="button" class="btn btn-secondary w-50 ms-2" onclick="toggleAdd()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background: #ffffff;
+    }
+    .form-control {
+        border-radius: 8px;
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+    .form-control:focus {
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        border-color: #007bff;
+    }
+    .list-group-item {
+        font-size: 1rem;
+        border: none;
+        padding: 0.75rem 1rem;
+    }
+</style>
+
+<script>
+    // JavaScript functions to toggle between view, edit, and add sections
+    function toggleEdit() {
+        document.getElementById('profile-view').classList.toggle('d-none');
+        document.getElementById('profile_edit').classList.toggle('d-none');
+    }
+
+    function toggleAdd() {
+        document.getElementById('profile-view').classList.toggle('d-none');
+        document.getElementById('profile-add').classList.toggle('d-none');
+    }
+</script>
+{% endblock %}
+
+

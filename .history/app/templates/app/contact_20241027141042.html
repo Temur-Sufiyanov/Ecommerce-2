@@ -1,0 +1,115 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Contact Us
+{% endblock title %}
+
+{% block content %}
+<div class="contact-container">
+    <h1>Contact Us</h1>
+    <p class="intro">We'd love to hear from you! Whether you have questions about our products, need assistance, or just want to say hello, feel free to reach out.</p>
+
+    <div class="contact-details">
+        <h2>Get in Touch</h2>
+        <p>Email: <a href="mailto:temursufiyanov@gmail.com">temursufiyanov@gmail.com</a></p>
+        <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+        
+        <h2>Our Location</h2>
+        <p>123 Eco-Friendly St.<br>
+        Green City, Country 12345</p>
+        
+        <div class="social-media">
+            <h2>Follow Us</h2>
+            <a href="#" target="_blank">Facebook</a> |
+            <a href="#" target="_blank">Instagram</a> |
+            <a href="#" target="_blank">Twitter</a>
+        </div>
+    </div>
+
+    <div class="contact-form">
+        <h2>Send Us a Message</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .contact-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        color: #3498db;
+        text-align: center;
+    }
+    .intro {
+        text-align: center;
+        margin: 10px 0 30px;
+        font-size: 1.1em;
+    }
+    .contact-details {
+        margin-bottom: 30px;
+    }
+    .contact-details h2 {
+        color: #2c3e50;
+        margin-top: 20px;
+    }
+    .social-media a {
+        margin-right: 10px;
+        color: #2980b9;
+        text-decoration: none;
+    }
+    .social-media a:hover {
+        text-decoration: underline;
+    }
+    .contact-form {
+        margin-top: 30px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+{% endblock content %}

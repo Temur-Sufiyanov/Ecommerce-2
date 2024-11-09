@@ -1,0 +1,108 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Your Shopping Cart</h2>
+
+    <div class="row">
+        <!-- Cart Items Section -->
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4 mb-4 border-0">
+                <h5 class="card-title text-primary">Items in Cart</h5>
+
+                {% if cart_items %}
+                    {% for item in cart_items %}
+                        <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+                            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" 
+                                 class="rounded" style="width: 80px; height: 80px; object-fit: cover;">
+
+                            <div class="ms-3" style="flex: 1;">
+                                <h6 class="fw-bold mb-1">{{ item.product.name }}</h6>
+                                <p class="text-muted mb-1">Price for one: ${{ item.product.<p class="text-muted mb-1">Price: ${{ item.product.price }}</p> }}</p>
+                                <p class="text-muted mb-1">Price: ${{ item.product.price }}</p>
+                                <form method="post" action="" class="d-flex align-items-center">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" 
+                                           class="form-control form-control-sm me-2" min="1" style="max-width: 80px;">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">Update</button>
+                                </form>
+                            </div>
+                            <form method="post" action="" class="ms-3">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center">Your cart is empty.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="col-md-4">
+            <div class="card shadow-lg p-4 border-0">
+                <h5 class="card-title text-primary">Order Summary</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0">
+                        Subtotal
+                        <span class="fw-semibold">${{ cart_total|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0">
+                        Tax (10%)
+                        <span class="fw-semibold">${{ cart_total|floatformat:2|add:"0.1"|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0">
+                        <strong>Total</strong>
+                        <strong>${{ cart_total|floatformat:2|add:"0.1"|floatformat:2 }}</strong>
+                    </li>
+                </ul>
+                <div class="mt-4 text-center">
+                    <a href="" class="btn btn-primary w-100 py-2">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 12px;
+    }
+
+    .btn-outline-primary, .btn-primary {
+        border-radius: 6px;
+        font-weight: 500;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-danger {
+        border-radius: 6px;
+        background-color: #dc3545;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .list-group-item {
+        background: transparent;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    .fw-semibold {
+        font-weight: 600;
+    }
+
+    .text-primary {
+        color: #007bff;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Your Shopping Cart</h2>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Your Shopping Cart</h2>
+    
+        {% if cart_items %}
+        <form method="POST" action="{% url 'cart' %}">
+            {% csrf_token %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>
+                            <input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}" min="1" class="form-control" style="width: 70px;">
+                        </td>
+                        <td>${{ item.product.price }}</td>
+                        {% comment %} <td>${{ item.product.price|multiply:item.quantity }}</td> {% endcomment %}
+                        <td>
+                            <a href="" class="btn btn-danger btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                        {% comment %} <td colspan="2">${{ cart_items|calculate_total }}</td> {% endcomment %}
+                    </tr>
+                </tfoot>
+            </table>
+            <button type="submit" class="btn btn-primary">Update Cart</button>
+        </form>
+        {% else %}
+        <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+
+        <!-- Order Summary Section -->
+        <div class="col-md-4">
+            <div class="card shadow p-4">
+                <h5 class="card-title">Order Summary</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Subtotal
+                        <span>${{ cart_total }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Tax (10%)
+                        <span>${{ cart_total|floatformat:2|add:"0.1"|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Total</strong>
+                        <strong>${{ cart_total|floatformat:2|add:"0.1"|floatformat:2 }}</strong>
+                    </li>
+                </ul>
+                <div class="mt-4 text-center">
+                    <a href="" class="btn btn-primary w-100">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+    }
+    .btn-danger {
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}

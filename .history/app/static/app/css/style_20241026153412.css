@@ -1,0 +1,156 @@
+.owl-carousel .item{
+ /* border: 1px solid black; */
+ font-size: 24px;
+ text-align: center;
+ margin-top: 20px;
+ transition: transform .5s ease;
+}
+
+ .owl-carousel .item:hover{
+    /* border: 1px solid black; */
+    transform : scale(1.1);
+}
+
+/* .owl-carousel img{
+    transition: transform .5s ease;
+  }
+ .owl-carousel img:hover{
+    
+    transform : scale(1.25);
+} */
+
+.owl-next{
+ float:right;
+}
+.owl-prev{
+ float:left;
+}
+.owl-prev span{
+ font-size: 24px;
+ font-weight: bold;
+}
+.owl-next span{
+ font-size: 24px;
+ font-weight: bold;
+}
+
+
+
+
+.buttermilk{
+    background-color:#fff;background-image:linear-gradient(#fff7ef, #fff);
+    background-image:-webkit-linear-gradient(#fff7ef, #fff);
+    background-image:-moz-linear-gradient(#fff7ef, #fff);
+    background-image:-ms-linear-gradient(#fff7ef, #fff);
+    background-image:-o-linear-gradient(#fff7ef, #fff);
+    padding:50px 40px;
+    border:1px solid #efe8e1;
+    padding-bottom:20px;
+}
+
+.smbg{
+    background-color:#fff;
+    background-image:linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+    background-image:-webkit-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+    background-image:-moz-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+    background-image:-ms-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+    background-image:-o-linear-gradient(rgba(110, 69, 143, 0.1), #fff);
+}
+
+.curdbgpro{
+    background-color:#fff;
+    background-image:linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+    background-image:-webkit-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+    background-image:-moz-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+    background-image:-ms-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+    background-image:-o-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
+}
+
+.goodnessseccont img{
+    width:100%;
+}
+
+.mlkpro{
+    color:#636362;
+    font-size:22px;
+    line-height:22px;
+    margin-bottom:15px;
+    width:43%;
+    margin:0 auto;
+    text-align:center;
+    
+}
+
+.goodnesssec a{
+    text-decoration: none;
+}
+
+
+.product-detail-container {
+    max-width: 900px; /* Set a max width */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Padding around the container */
+}
+
+.hero-image img {
+    width: 100%; /* Full width */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.product-info {
+    padding: 20px 0; /* Spacing above and below */
+}
+
+.price {
+    font-size: 1.5rem; /* Larger price font */
+    color: #333; /* Dark color */
+}
+
+.discount-price {
+    color: red; /* Highlight discount price */
+}
+
+.tabs {
+    display: flex; /* Flexbox for tabs */
+    margin-top: 20px; /* Space above tabs */
+}
+
+.tab-button {
+    padding: 10px 20px; /* Padding */
+    cursor: pointer; /* Pointer on hover */
+}
+
+.tab-button.active {
+    background-color: #007bff; /* Active button color */
+    color: white; /* Active text color */
+}
+
+.tab-content {
+    display: none; /* Hidden by default */
+    padding: 20px; /* Padding */
+    border: 1px solid #ddd; /* Border for content */
+    border-radius: 8px; /* Rounded corners */
+    margin-top: 10px; /* Space above content */
+}
+
+.tab-content.active {
+    display: block; /* Show active tab content */
+}
+
+.related-products {
+    margin-top: 30px; /* Space above related products */
+    display: grid; /* Grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Space between related products */
+}
+
+.related-product-card {
+    border: 1px solid #ddd; /* Border around related products */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding */
+    text-align: center; /* Center align text */
+}
+
+.related-product-card img {
+    max-width: 100%; /* Responsive image */
+}

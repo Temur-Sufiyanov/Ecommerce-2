@@ -1,0 +1,63 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Login
+{% endblock title %}
+
+
+{% block content %}
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 10%;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-control:focus {
+            border-color: #2575fc;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: #2575fc;
+            border-color: #2575fc;
+        }
+        .btn-primary:hover {
+            background-color: #1b5dbd;
+            border-color: #1b5dbd;
+        }
+        .forgot-link, .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #2575fc;
+            font-size: 0.9rem;
+        }
+    </style>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Login</h2>
+                <p class="text-muted">Welcome back! Please log in to your account.</p>
+            </div>
+            <form method="POST" action="{% url 'login' %}" novalidate>
+                {% csrf_token %}
+                
+                <!-- Login Button -->
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                <!-- Links for Forgot Password and Register -->
+                <a href="/forgot-password" class="forgot-link">Forgot Password?</a>
+                <a href="{% url 'register' %}" class="register-link">Don’t have an account? Sign Up</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
+    

@@ -1,0 +1,257 @@
+{% extends "app/base.html" %}  
+{% load static %}
+{% block content %}
+<style>
+    .product-detail-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-section {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .hero-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .product-title {
+        font-size: 2.5em;
+        margin: 0.5em 0;
+    }
+
+    .price {
+        font-size: 1.5em;
+        color: #ffcc00;
+    }
+
+    .discount-price {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #95a5a6;
+        color: white;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+        transform: translateY(-2px);
+    }
+
+    .average-rating {
+        margin-top: 10px;
+    }
+
+    .star {
+        font-size: 1.5em;
+        color: #ffd700;
+        cursor: pointer;
+    }
+
+    .filled {
+        color: #ffd700; /* Gold */
+    }
+
+    .tabs {
+        display: flex;
+        margin-top: 20px;
+        border-bottom: 2px solid #ccc;
+    }
+
+    .tab-button {
+        background: none;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: border-bottom 0.3s;
+    }
+
+    .tab-button.active {
+        border-bottom: 2px solid #3498db;
+        font-weight: bold;
+    }
+
+    .tab-content {
+        margin-top: 20px;
+    }
+
+    .related-products {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .related-product-card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .related-product-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Add media queries for responsive design */
+    @media (max-width: 768px) {
+        .product-title {
+            font-size: 2em;
+        }
+
+        .btn {
+            padding: 10px 20px;
+        }
+    }
+</style>
+<div class="product-detail-container">
+    <div class="hero-section">
+        <div class="hero-image">
+            <img src="{{ product.product_image.url }}" alt="{{ product.name }}" class="img-fluid">
+            <div class="hero-overlay">
+                <h1 class="product-title">{{ product.name }}</h1>
+                <p class="price">${{ product.product_price }}</p>
+                {% if product.discount_price %}
+                    <p class="discount-price">Save {{ product.discount_price }}%!</p>
+                {% endif %}
+                <form method="POST" action="{% url 'add_to_cart' product %}" class="action-buttons">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    <button type="button" class="btn btn-secondary">Buy Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-info">
+        <div class="ratings">
+            <div class="average-rating">
+                <strong>Average Rating: </strong>
+                {% for i in "12345" %}
+                    {% if forloop.counter <= product.average_rating %}
+                        <span class="star filled">★</span> <!-- Filled star -->
+                    {% else %}
+                        <span class="star">☆</span> <!-- Empty star -->
+                    {% endif %}
+                {% endfor %}
+                <span>({{ product.average_rating }}/5 from {{ product.rating_count }} reviews)</span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'description')">Description</button>
+            <button class="tab-button" onclick="openTab(event, 'reviews')">Reviews</button>
+        </div>
+
+        <div id="description" class="tab-content active">
+            <h3>Product Description</h3>
+            <p>{{ product.description }}</p>
+        </div>
+
+        <div id="reviews" class="tab-content">
+            <h3>Customer Reviews</h3>
+            <form method="POST" action="" id="rating-form">
+                {% csrf_token %}
+                {{ form.rating }} <!-- This is a hidden field now -->
+                <div class="rating-stars">
+                    {% for i in "12345" %}
+                        <span class="star" data-value="{{ forloop.counter }}">☆</span>
+                    {% endfor %}
+                </div>
+            </form>
+
+            {% if product.total_rating < 0 %}
+            <p>No reviews yet. Be the first to review this product!</p>
+            {% else %}
+            <p>Rate this product!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="related-products">
+        <h3>Related Products</h3>
+        {% for related_product in related_products %}
+            <div class="related-product-card">
+                <a href="{% url 'product_detail' related_product.product_slug %}">
+                    <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}" class="img-fluid">
+                    <h4>{{ related_product.name }}</h4>
+                    <p>${{ related_product.price }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    // JavaScript to handle star click
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-value');
+            document.querySelector('input[name="rating"]').value = rating;  // Set hidden input value
+            document.getElementById('rating-form').submit();  // Submit form
+        });
+    });
+    function openTab(evt, tabName) {
+        // Hide all tab contents
+        var i, tabcontent, tabbuttons;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";  
+        }
+        // Remove active class from all buttons
+        tabbuttons = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tabbuttons.length; i++) {
+            tabbuttons[i].classList.remove("active");
+        }
+        // Show the current tab and add an active class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";  
+        evt.currentTarget.classList.add("active");
+    }
+    </script>
+
+{% endblock %}

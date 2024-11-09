@@ -1,0 +1,47 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Category
+{% endblock title %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-5">{{category.name}}</h2>
+    <p class="total-products">Total Products: {{ total_products }}</p> 
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <!-- Product Card Start -->
+        
+        {% for product in products %} 
+        <div class="col">
+            <div class="card product-card shadow-sm">
+                <img src="{{product.product_image.url}}" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <!-- Price Display with Discount -->
+                    <div class="product-pricing">
+                      {% if product.discount_price > 0 %}
+                          <span class="original-price text-muted" style="text-decoration: line-through;">
+                              ${{ product.product_price }}
+                          </span>
+                          <span class="discounted-price text-danger" style="font-size: 1.5rem;">
+                              ${{ product.discounted_price }}
+                          </span>
+                          <p class="discount-note text-success">
+                              Save {{ product.discount_price }}%!
+                          </p>
+                      {% else %}
+                          <span class="regular-price" style="font-size: 1.5rem;">
+                              ${{ product.product_price }}
+                          </span>
+                      {% endif %}
+                  </div>
+                    <a href="{% url 'add_to_cart' prodcut.id %}" class="btn btn-primary w-100">Add to Cart</a>
+                </div>
+                <a href="{% url 'product_detail' product.product_slug  %}" class="btn btn-view">Quick View</a>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Product Card End -->
+    </div>
+</div>
+
+{% endblock content %}

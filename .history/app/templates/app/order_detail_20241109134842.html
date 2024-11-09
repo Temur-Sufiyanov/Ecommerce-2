@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Order #{{ order.id }}</h2>
+    
+    <div class="card shadow-lg p-4 mb-4">
+        <h5 class="card-title">Order Summary</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>Order Date:</span>
+                <span>{{ order.order_date|date:"M d, Y H:i" }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>Status:</span>
+                <strong>{{ order.get_status_display }}</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>Total Amount:</span>
+                <strong>$ {{ order.total_amount|floatformat:2 }}</strong>
+            </li>
+        </ul>
+    </div>
+    
+    <h4 class="mb-4">Order Items</h4>
+    {% for item in order_items %}
+        <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.name }}" 
+                 class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
+            <div class="ms-3" style="flex: 1;">
+                <h6 class="fw-bold mb-1">{{ item.product.name }}</h6>
+                <p class="mb-1">Quantity: {{ item.quantity }}</p>
+                <p class="mb-1">Price: ${{ item.price }}</p>
+                <p class="mb-1">Total: ${{ item.price|floatformat:2 }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

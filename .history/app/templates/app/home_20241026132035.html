@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+load
+{% block content %}
+<div class="container my-5">
+    <div class="product-details text-center">
+        <h2>{{ product.name }}</h2>
+        <p class="product-description">{{ product.description }}</p>
+
+        <!-- Price Display with Discount -->
+        <div class="product-pricing">
+            {% if product.discount_price > 0 %}
+                <span class="original-price text-muted" style="text-decoration: line-through;">
+                    ${{ product.product_price }}
+                </span>
+                <span class="discounted-price text-danger" style="font-size: 1.5rem;">
+                    ${{ product.discounted_price }}
+                </span>
+                <p class="discount-note text-success">
+                    Save {{ product.product_discount }}%!
+                </p>
+            {% else %}
+                <span class="regular-price" style="font-size: 1.5rem;">
+                    ${{ product.price }}
+                </span>
+            {% endif %}
+                    <a href="#" class="btn btn-primary w-100">Add to Cart</a>
+                </div>
+                <a href="#" class="btn btn-view">Quick View</a>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Product Card End -->
+    </div>
+</div>
+{% endblock content %}
+    

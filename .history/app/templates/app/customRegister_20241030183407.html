@@ -1,0 +1,134 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Registration
+{% endblock title %}
+{% block content %}
+    <style>
+        .center-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .register-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-control:focus {
+            border-color: #2575fc;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: #2575fc;
+            border-color: #2575fc;
+        }
+        .btn-primary:hover {
+            background-color: #1b5dbd;
+            border-color: #1b5dbd;
+        }
+        .sign-in-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+    <div class="center-wrapper mt-2">
+        <div class="register-container">
+            <h2 class="text-center mb-4">Create an Account</h2>
+            
+            <form method="POST" action=" {% url 'register' %}" id="registrationForm" novalidate> {% csrf_token %}
+                <!-- Render each form field manually -->
+                <div class="mb-3">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.fullname.label_tag }}
+                    {{ form.fullname }}
+                    {% if form.fullname.errors %}
+                        <div class="invalid-feedback">{{ form.fullname.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="invalid-feedback">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <div class="invalid-feedback">{{ form.password1.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="invalid-feedback">{{ form.password2.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Custom Terms Checkbox -->
+                <div class="form-check mb-4 text-left">
+                    {{ form.terms }}
+                    <label class="form-check-label" for="{{ form.terms.id_for_label }}">
+                        I agree to the <a href="#">terms and conditions</a>
+                    </label>
+                    {% if form.terms.errors %}
+                        <div class="invalid-feedback">{{ form.terms.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+                <!-- Sign In Link -->
+                <a href="/login" class="sign-in-link text-primary">Already have an account? Sign In</a>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("registrationForm");
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("confirmPassword");
+
+            form.addEventListener("submit", function (event) {
+                // Prevent form submission if there are validation errors
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Check if form is valid
+                if (form.checkValidity() === false) {
+                    form.classList.add("was-validated");
+                } else if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity("Passwords do not match.");
+                    confirmPassword.reportValidity();
+                } else {
+                    // If form is valid and passwords match, proceed with submission
+                    form.submit();
+                }
+            });
+
+            // Clear custom validity when passwords are edited
+            password.addEventListener("input", function () {
+                confirmPassword.setCustomValidity("");
+            });
+            confirmPassword.addEventListener("input", function () {
+                confirmPassword.setCustomValidity("");
+            });
+        });
+    </script>
+
+{% endblock content %}

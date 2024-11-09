@@ -1,0 +1,77 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Your Shopping Cart</h2>
+    
+    <!-- Cart Items Section -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow p-4 mb-4">
+                <h5 class="card-title">Items in Cart</h5>
+                
+                {% if cart_items %}
+                    {% for item in cart_items %}
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                            <div class="ms-3" style="flex: 1;">
+                                <h6>{{ item.product.name }}</h6>
+                                <p class="text-muted mb-1">Price: ${{ item.product.price }}</p>
+                                <form method="post" action="{% url 'update_cart' item.id %}">
+                                    {% csrf_token %}
+                                    <div class="input-group">
+                                        <input type="number" name="quantity_" value="{{ item.quantity }}" class="form-control" min="1" style="max-width: 80px;">
+                                        <button type="submit" class="btn btn-outline-secondary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center">Your cart is empty.</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Order Summary Section -->
+        <div class="col-md-4">
+            <div class="card shadow p-4">
+                <h5 class="card-title">Order Summary</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Subtotal
+                        <span>${{ cart_total }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Tax (10%)
+                        <span>${{ cart_total|floatformat:2|add:"0.1"|floatformat:2 }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Total</strong>
+                        <strong>${{ cart_total|floatformat:2|add:"0.1"|floatformat:2 }}</strong>
+                    </li>
+                </ul>
+                <div class="mt-4 text-center">
+                    <a href="" class="btn btn-primary w-100">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+    }
+    .btn-danger {
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}

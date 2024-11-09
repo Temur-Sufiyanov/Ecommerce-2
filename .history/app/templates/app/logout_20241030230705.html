@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}
+    Logout
+{% endblock title %}
+
+{% block content %}
+<style>
+    .center-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .logout-container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        text-align: center;
+    }
+    .logout-container h2 {
+        color: #333;
+    }
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 10px 0;
+        font-weight: bold;
+    }
+    .btn-primary {
+        background-color: #e63946;
+        border-color: #e63946;
+        margin-top: 20px;
+    }
+    .btn-primary:hover {
+        background-color: #d62839;
+    }
+    .btn-secondary {
+        background-color: #4cc9f0;
+        border-color: #4cc9f0;
+    }
+    .btn-secondary:hover {
+        background-color: #3a86ff;
+    }
+</style>
+
+<div class="center-wrapper">
+    <div class="logout-container">
+        <h2 class="mb-4">Are You Sure You Want to Logout?</h2>
+        <p class="mb-4">You can always log back in anytime!</p>
+        
+        <!-- Confirm Logout Button -->
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Yes, Log Me Out</button>
+        </form>
+
+        <!-- Go Back Button -->
+        <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Cancel</a>
+    </div>
+</div>
+{% endblock content %}

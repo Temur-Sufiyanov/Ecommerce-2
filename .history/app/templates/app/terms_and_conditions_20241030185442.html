@@ -1,0 +1,42 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}
+    Registration
+{% endblock title %}
+
+{% block content %}
+<style>
+    .center-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .register-container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+    }
+    .form-control:focus {
+        border-color: #2575fc;
+        box-shadow: none;
+    }
+    .btn-primary {
+        background-color: #2575fc;
+        border-color: #2575fc;
+    }
+    .btn-primary:hover {
+        background-color: #1b5dbd;
+        border-color: #1b5dbd;
+    }
+    .sign-in-link {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+{% endblock content %}

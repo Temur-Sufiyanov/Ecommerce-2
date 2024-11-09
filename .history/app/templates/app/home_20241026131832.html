@@ -1,0 +1,159 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock title %}
+
+{% block banner_slider %}
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'app/images/banner/b1.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b4.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b3.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b2.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b5.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b6.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b7.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'app/images/banner/b8.jpg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+  </div>
+{% endblock banner_slider %}
+
+{% block information %}
+<div class="container my-5">
+    <div class="row bg-light p-5 rounded shadow-sm">
+        <div class="col-md-6">
+            <img src="{% static 'app/images/logo-color.png' %}" class="img-fluid rounded" alt="About Us Image">
+        </div>
+        <div class="col-md-6">
+            <h2 class="mb-4">Welcome to ShopSphere</h2>
+            <p class="text-muted">We are committed to providing you with a unique shopping experience. From handpicked collections to exclusive deals, we’re here to make online shopping delightful and convenient.</p>
+            <ul class="list-unstyled my-4">
+                <li><i class="fas fa-check-circle text-success me-2"></i> Wide range of premium products</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Fast and secure checkout process</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Customer support available 24/7</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Sustainable and eco-friendly options</li>
+            </ul>
+            <a  href="#" class="btn btn-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">Shop Now</a>
+        </div>
+    </div>
+</div>
+{% endblock information %}
+    
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center mb-5">Our Featured Products</h2>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <!-- Product Card Start -->
+        
+        {% for product in products %} 
+        <div class="col">
+            <div class="card product-card shadow-sm">
+                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    
+To display a discount price in HTML, you can calculate the discount in your Django model or view, then pass it to the template for display. Below is an example of how you can set it up using a Product model with a discount percentage and showing both the original and discounted price in HTML.
+
+1. Update the Product Model (if needed)
+In case you don't already have a discount field, add one to calculate the discounted price. Here’s how to add it:
+
+python
+Копировать код
+# models.py
+
+from django.db import models
+from django.utils.text import slugify
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0)  # e.g., 20 for 20% discount
+    slug = models.SlugField(max_length=120, unique=True, blank=True)
+
+    @property
+    def discounted_price(self):
+        if self.discount_percentage > 0:
+            return self.price * (1 - self.discount_percentage / 100)
+        return self.price
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Product, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+2. Pass Data to Template
+Fetch the discounted_price property in your view and pass the product data to the template.
+
+python
+Копировать код
+# views.py
+
+from django.shortcuts import render, get_object_or_404
+from .models import Product
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    return render(request, 'product_detail.html', {'product': product})
+3. Display Discounted Price in HTML
+Use Bootstrap or plain HTML/CSS to style the original price (often struck through) and the discounted price. Here's an example template:
+
+html
+Копировать код
+<!-- product_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="product-details text-center">
+        <h2>{{ product.name }}</h2>
+        <p class="product-description">{{ product.description }}</p>
+
+        <!-- Price Display with Discount -->
+        <div class="product-pricing">
+            {% if product.discount_price > 0 %}
+                <span class="original-price text-muted" style="text-decoration: line-through;">
+                    ${{ product.prodyct }}
+                </span>
+                <span class="discounted-price text-danger" style="font-size: 1.5rem;">
+                    ${{ product.discounted_price }}
+                </span>
+                <p class="discount-note text-success">
+                    Save {{ product.discount_percentage }}%!
+                </p>
+            {% else %}
+                <span class="regular-price" style="font-size: 1.5rem;">
+                    ${{ product.price }}
+                </span>
+            {% endif %}
+                    <a href="#" class="btn btn-primary w-100">Add to Cart</a>
+                </div>
+                <a href="#" class="btn btn-view">Quick View</a>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Product Card End -->
+    </div>
+</div>
+{% endblock content %}
+    

@@ -1,0 +1,38 @@
+{% extends "app/base.html" %}  
+{% load static %}
+{% block content %}
+<div class="product-detail-container">
+    <h2>{{ product.name }}</h2>
+    
+    <div class="product-detail">
+        <div class="product-image">
+            <img src="{{ product.pruduct_image.url }}" alt="{{ product.name }}">
+        </div>
+        
+        <div class="product-info">
+            <p class="price">${{ product.price }}</p>
+            <p class="description">{{ product.description }}</p>
+
+            <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
+
+            <p class="availability">Availability: {{ product.availability }}</p>  <!-- Optional field -->
+        </div>
+    </div>
+
+    <h3>Related Products</h3>
+    <div class="related-products">
+        {% for related_product in related_products %}
+            <div class="related-product-card">
+                <a href="{% url 'product_detail' related_product.id %}">
+                    <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+                    <h4>{{ related_product.name }}</h4>
+                    <p>${{ related_product.price }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

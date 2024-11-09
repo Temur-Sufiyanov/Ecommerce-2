@@ -1,0 +1,48 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    All Products
+{% endblock title %}
+
+
+{% block content %}
+<div class="product-container container">
+    <h1 class="text-center mb-5">Our Products</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <!-- Example of a Product Card, duplicate or loop these for each product -->
+        <div class="col">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300" alt="Product Image" class="card-img-top">
+                <div class="product-details">
+                    <h5>Product Name</h5>
+                    <p class="price">$29.99</p>
+                    <div class="btn-group d-flex">
+                        <button class="btn btn-view"><i class="fas fa-info-circle"></i> View</button>
+                        <button class="btn btn-add-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Repeat Product Cards -->
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // JavaScript to handle Add to Cart button actions
+    document.querySelectorAll('.btn-add-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('Product added to cart!');
+            // Here you can add functionality to add the product to the cart
+        });
+    });
+
+    // JavaScript for View button actions
+    document.querySelectorAll('.btn-view').forEach(button => {
+        button.addEventListener('click', function() {
+            // Here you can add functionality to view the product details
+            alert('View product details');
+        });
+    });
+</script>
+{% endblock content %}
+    

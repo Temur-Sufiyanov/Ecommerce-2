@@ -1,0 +1,26 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-5">My Orders</h2>
+    
+    {% if orders %}
+        <div class="list-group">
+            {% for order in orders %}
+                <a href="{% url 'order_detail' order.id %}" class="list-group-item list-group-item-action mb-3 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">Order #{{ order.id }}</h5>
+                            <p class="mb-1">Date: {{ order.order_date|date:"M d, Y H:i" }}</p>
+                            <p class="mb-1">Status: <strong>{{ order.get_status_display }}</strong></p>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">$ {{ order.total_amount|floatformat:2 }}</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">You have no orders.</p>
+    {% endif %}
+</div>
+{% endblock %}

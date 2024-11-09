@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Category
+{% endblock title %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center">{{ category.name }}</h2>
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-card">
+                <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description|truncatewords:20 }}</p>
+                <p>${{ product.product_price }}</p>
+                <a href="" class="btn">View Details</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

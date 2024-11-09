@@ -1,0 +1,117 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    All Products
+{% endblock title %}
+
+
+{% block content %}
+<style>
+    /* Custom CSS for Product Grid */
+    body {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+    
+    .product-container {
+        padding: 2rem;
+    }
+
+    .product-card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: #fff;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-card img {
+        border-radius: 10px 10px 0 0;
+        object-fit: cover;
+        height: 200px;
+        width: 100%;
+    }
+
+    .product-details {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .product-details h5 {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-details .price {
+        font-size: 1rem;
+        color: #3498db;
+    }
+
+    .btn-group .btn {
+        flex: 1;
+        border-radius: 5px;
+        margin: 0.2rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-view {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-add-cart {
+        background-color: #2ecc71;
+        color: white;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+</style>
+<div class="product-container container">
+    <h1 class="text-center mb-5">Our Products</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <!-- Example of a Product Card, duplicate or loop these for each product -->
+        <div class="col">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300" alt="Product Image" class="card-img-top">
+                <div class="product-details">
+                    <h5>Product Name</h5>
+                    <p class="price">$29.99</p>
+                    <div class="btn-group d-flex">
+                        <button class="btn btn-view"><i class="fas fa-info-circle"></i> View</button>
+                        <button class="btn btn-add-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Repeat Product Cards -->
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // JavaScript to handle Add to Cart button actions
+    document.querySelectorAll('.btn-add-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('Product added to cart!');
+            // Here you can add functionality to add the product to the cart
+        });
+    });
+
+    // JavaScript for View button actions
+    document.querySelectorAll('.btn-view').forEach(button => {
+        button.addEventListener('click', function() {
+            // Here you can add functionality to view the product details
+            alert('View product details');
+        });
+    });
+</script>
+{% endblock content %}
+    

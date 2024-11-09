@@ -1,0 +1,186 @@
+{% extends "app/base.html" %}  
+{% load static %}
+{% block content %}
+<style>
+    .product-detail-container {
+        max-width: 900px; /* Set a max width */
+        margin: 0 auto; /* Center the container */
+        padding: 20px; /* Padding around the container */
+    }
+    
+    .hero-image img {
+        width: 100%; /* Full width */
+        border-radius: 10px; /* Rounded corners */
+    }
+    
+    .product-info {
+        padding: 20px 0; /* Spacing above and below */
+    }
+    
+    .price {
+        font-size: 1.5rem; /* Larger price font */
+        color: #333; /* Dark color */
+    }
+    
+    .discount-price {
+        color: red; /* Highlight discount price */
+    }
+    
+    .tabs {
+        display: flex; /* Flexbox for tabs */
+        margin-top: 20px; /* Space above tabs */
+    }
+    
+    .tab-button {
+        padding: 10px 20px; /* Padding */
+        cursor: pointer; /* Pointer on hover */
+    }
+    
+    .tab-button.active {
+        background-color: #007bff; /* Active button color */
+        color: white; /* Active text color */
+    }
+    
+    .tab-content {
+        display: none; /* Hidden by default */
+        padding: 20px; /* Padding */
+        border: 1px solid #ddd; /* Border for content */
+        border-radius: 8px; /* Rounded corners */
+        margin-top: 10px; /* Space above content */
+    }
+    
+    .tab-content.active {
+        display: block; /* Show active tab content */
+    }
+    
+    .related-products {
+        margin-top: 30px; /* Space above related products */
+        display: grid; /* Grid layout */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
+        gap: 20px; /* Space between related products */
+    }
+    
+    .related-product-card {
+        border: 1px solid #ddd; /* Border around related products */
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px; /* Padding */
+        text-align: center; /* Center align text */
+    }
+    
+    .related-product-card img {
+        max-width: 100%; /* Responsive image */
+    }
+    .star {
+        font-size: 2rem;
+        cursor: pointer;
+        color: gray;
+    }
+    .star:hover, .star:hover ~ .star {
+        color: gold;  /* Highlight all stars to the left */
+    }
+    </style>
+<div class="product-detail-container">
+    <div class="hero-image">
+        <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
+    </div>
+
+    <div class="product-info">
+        <h1>{{ product.name }}</h1>
+        <p class="price">${{ product.product_price }}</p>
+        {% if product.discount_price %}
+            <p class="discount-price">Save {{ product.discount_price }}%!</p>
+        {% endif %}
+        <p class="description">{{ product.description }}</p>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+            <button type="button" class="btn btn-secondary">Buy Now</button>
+        </form>
+       
+        <div class="ratings">
+            <div class="average-rating">
+                <strong>Average Rating: </strong>
+                {% for i in "12345" %}
+                    {% if  forloop.counter <= product.average_rating %}
+                        <span>⭐</span> <!-- Filled star -->
+                    {% else %}
+                        <span>☆</span> <!-- Empty star -->
+                    {% endif %}
+                {% endfor %}
+                <span>({{ product.average_rating }}/5 from {{ product.rating_count }} reviews)</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab(event, 'description')">Description</button>
+        <button class="tab-button" onclick="openTab(event, 'reviews')">Reviews</button>
+    </div>
+
+    <div id="description" class="tab-content active">
+        <h3>Product Description</h3>
+        <p>{{ product.description }}</p>
+    </div>
+
+    <div id="reviews" class="tab-content">
+        <h3>Customer Reviews</h3>
+        <form method="POST" action="" id="rating-form">
+            {% csrf_token %}
+            {{ form.rating }}  <!-- This is a hidden field now -->
+            <div class="rating-stars">
+                {% for i in "12345" %}
+                    <span class="star" data-value="{{ forloop.counter }}">☆</span>
+                {% endfor %}
+            </div>
+        </form>
+        
+        {% if   product.average_rating%}
+            
+        {% endif %}
+            
+        <p>No reviews yet. Be the first to review this product!</p>
+        <!-- You can loop through actual reviews here if available -->
+    </div>
+
+    <h3>Related Products</h3>
+    <div class="related-products">
+        {% for related_product in related_products %}
+            <div class="related-product-card">
+                <a href="{% url 'product_detail' related_product.product_slug %}">
+                    <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+                    <h4>{{ related_product.name }}</h4>
+                    <p>${{ related_product.price }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    // JavaScript to handle star click
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-value');
+            document.querySelector('input[name="rating"]').value = rating;  // Set hidden input value
+            document.getElementById('rating-form').submit();  // Submit form
+        });
+    });
+    function openTab(evt, tabName) {
+        // Hide all tab contents
+        var i, tabcontent, tabbuttons;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";  
+        }
+        // Remove active class from all buttons
+        tabbuttons = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tabbuttons.length; i++) {
+            tabbuttons[i].classList.remove("active");
+        }
+        // Show the current tab and add an active class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";  
+        evt.currentTarget.classList.add("active");
+    }
+    </script>
+
+{% endblock %}

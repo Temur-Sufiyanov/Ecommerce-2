@@ -1,0 +1,264 @@
+{% extends "app/base.html" %}  
+{% load static %}
+{% block content %}
+    <style>
+        /* Product Detail Page Styling */
+.product-detail-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.hero-image img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-info {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-top: -50px;
+    position: relative;
+    z-index: 10;
+}
+
+.product-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.product-price {
+    font-size: 1.8rem;
+    color: #28a745;
+}
+
+.discount-price {
+    font-size: 1.2rem;
+    color: #dc3545;
+}
+
+.product-description {
+    margin: 20px 0;
+    color: #555;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Ratings Styling */
+.ratings .average-rating {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #555;
+}
+
+.rating-stars .star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    color: #ccc;
+}
+
+.rating-stars .star:hover,
+.rating-stars .star:hover ~ .star {
+    color: gold;
+}
+
+/* Tabs Styling */
+.tabs {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.tab-button {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.tab-button.active,
+.tab-button:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Related Products Styling */
+.related-products {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.related-product-card {
+    width: 180px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    transition: box-shadow 0.3s;
+}
+
+.related-product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.related-product-card:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}</style>
+    <div class="product-detail-container">
+        <div class="hero-image">
+            <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
+        </div>
+    
+        <div class="product-info">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-price">${{ product.product_price }}</p>
+            {% if product.discount_price %}
+                <p class="discount-price">Save {{ product.discount_price }}%!</p>
+            {% endif %}
+            <p class="product-description">{{ product.description }}</p>
+    
+            <form method="POST" action="" class="action-buttons">
+                {% csrf_token %}
+                <button type="submit" class="btn-primary">Add to Cart</button>
+                <button type="button" class="btn-secondary">Buy Now</button>
+            </form>
+    
+            <div class="ratings">
+                <div class="average-rating">
+                    <strong>Average Rating: </strong>
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= product.average_rating %}
+                            <span>⭐</span>
+                        {% else %}
+                            <span>☆</span>
+                        {% endif %}
+                    {% endfor %}
+                    <span>({{ product.average_rating }}/5 from {{ product.rating_count }} reviews)</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'description')">Description</button>
+            <button class="tab-button" onclick="openTab(event, 'reviews')">Reviews</button>
+        </div>
+    
+        <div id="description" class="tab-content active">
+            <h3>Product Description</h3>
+            <p>{{ product.description }}</p>
+        </div>
+    
+        <div id="reviews" class="tab-content">
+            <h3>Customer Reviews</h3>
+            <form method="POST" action="" id="rating-form" class="rating-form">
+                {% csrf_token %}
+                {{ form.rating }}
+                <div class="rating-stars">
+                    {% for i in "12345" %}
+                        <span class="star" data-value="{{ forloop.counter }}">☆</span>
+                    {% endfor %}
+                </div>
+            </form>
+            
+            {% if product.rating_count == 0 %}
+                <p>No reviews yet. Be the first to review this product!</p>
+            {% else %}
+                <p>Rate this product!</p>
+            {% endif %}
+        </div>
+    
+        <h3>Related Products</h3>
+        <div class="related-products">
+            {% for related_product in related_products %}
+                <div class="related-product-card">
+                    <a href="{% url 'product_detail' related_product.product_slug %}">
+                        <img src="{{ related_product.image.url }}" alt="{{ related_product.name }}">
+                        <h4>{{ related_product.name }}</h4>
+                        <p>${{ related_product.product_price }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+<script>
+    // JavaScript to handle star click
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-value');
+            document.querySelector('input[name="rating"]').value = rating;  // Set hidden input value
+            document.getElementById('rating-form').submit();  // Submit form
+        });
+    });
+    function openTab(evt, tabName) {
+        // Hide all tab contents
+        var i, tabcontent, tabbuttons;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";  
+        }
+        // Remove active class from all buttons
+        tabbuttons = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tabbuttons.length; i++) {
+            tabbuttons[i].classList.remove("active");
+        }
+        // Show the current tab and add an active class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";  
+        evt.currentTarget.classList.add("active");
+    }
+    </script>
+
+{% endblock %}

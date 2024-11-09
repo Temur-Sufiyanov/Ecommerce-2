@@ -1,0 +1,28 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Category
+{% endblock title %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-center">{{ category.name }}</h2>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ product.productimage.url }}" alt="{{ product.name }}">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                        <p class="card-text"><strong>Price:</strong> ${{ product.product_price }}</p>
+                        <a href="#" class="btn btn-primary">View Product</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No products found in this category.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

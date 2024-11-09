@@ -1,0 +1,184 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    About Us
+{% endblock title %}
+
+{% block content %}
+<div class="about-container">
+    <h1>About Us</h1>
+    <p class="intro">Welcome to <strong>ShopSphere</strong>, your go-to source for <strong>all type of product</strong>. Our passion for quality and customer satisfaction drives us to provide the best shopping experience.</p>
+
+    <div class="story-section">
+        <h2>Our Story</h2>
+        <p>ShopSphere was founded in 2024 by <strong>Temur</strong>. What started as a small venture has grown into a thriving community of <strong>Eco-Friendly eCommerce Store</strong>. Our mission has always been to improve customer loyalty..</p>
+    </div>
+
+    <div class="mission-section">
+        <h2>Our Mission</h2>
+        <p>At <strong>ShopSphere</strong>, our mission is to provide sustainable, high-quality products that empower conscious consumers to make eco-friendly choices for a healthier planet. We believe that every purchase can contribute to a more sustainable future..</p>
+    </div>
+
+    <div class="why-choose-us-section">
+        <h2>Why Choose Us?</h2>
+        <div class="reasons">
+            <div class="reason-card">
+                <h3>Quality Products</h3>
+                <p>We carefully curate our selection to ensure that we offer only the highest quality products.</p>
+            </div>
+            <div class="reason-card">
+                <h3>Exceptional Service</h3>
+                <p>Our team is always here to help you with any questions or concerns you may have.</p>
+            </div>
+            <div class="reason-card">
+                <h3>Fast Shipping</h3>
+                <p>We ensure quick processing and delivery because we know you want your items ASAP.</p>
+            </div>
+            <div class="reason-card">
+                <h3>Community Focused</h3>
+                <p>We believe in giving back to our community and supporting local initiatives.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="team-section">
+        <h2>Meet Our Team</h2>
+        <div class="team-member">
+            <img src="{% static 'app/images/Feruz.jpg' %}" alt="Team Member Name">
+            <h3>Feruz Juraev</h3>
+            <p>Web Developer and </p>
+        </div>
+        <div class="team-member">
+            <img src="{% static 'app/images/Farrukh.jpg' %}" alt="Team Member Name">
+            <h3>Farrukh Abdurakhmonov</h3>
+            <p>[Team Member Position]</p>
+        </div>
+        <div class="team-member">
+            <img src="{% static 'app/images/Asliddin.jpg' %}" alt="Team Member Name">
+            <h3>Asliddin Choriyev</h3>
+            <p>Data Analyst</p>
+        </div>
+    </div>
+
+    <div class="community-section">
+        <h2>Join Our Community</h2>
+        <p>Follow us on social media to stay updated on our latest products, promotions, and events. Let’s connect!</p>
+    </div>
+
+    <div class="contact-section">
+        <h2>Contact Us</h2>
+        <p>If you have any questions, feel free to reach out to us at <a href="mailto:email@example.com">email@example.com</a> or through our <a href="contact.html">Contact Us</a> page.</p>
+    </div>
+
+    <p class="thank-you">Thank you for choosing <strong>[Your Store Name]</strong>! We appreciate your support and look forward to serving you.</p>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .about-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #3498db;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-top: 30px;
+        color: #2c3e50;
+    }
+
+    p.intro {
+        font-size: 1.2em;
+        text-align: center;
+        margin: 10px 0 30px;
+    }
+
+    .story-section, .mission-section, .community-section, .contact-section {
+        margin-top: 30px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+
+    .why-choose-us-section {
+        margin-top: 30px;
+    }
+
+    .reasons {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .reason-card {
+        flex: 1 1 calc(50% - 20px);
+        background: #ecf0f1;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+    .reason-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .team-section {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .team-member {
+        text-align: center;
+        margin: 20px;
+        max-width: 150px;
+    }
+
+    .team-member img {
+        width: 100%;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .thank-you {
+        text-align: center;
+        margin-top: 40px;
+        font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        .reasons {
+            flex-direction: column;
+            align-items: center;
+        }
+        .reason-card {
+            flex: 1 1 80%;
+        }
+        .team-section {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+{% endblock content %}
+    

@@ -1,0 +1,100 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}
+    Registration
+{% endblock title %}
+{% block content %}
+    <style>
+        .center-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .register-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-control:focus {
+            border-color: #2575fc;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: #2575fc;
+            border-color: #2575fc;
+        }
+        .btn-primary:hover {
+            background-color: #1b5dbd;
+            border-color: #1b5dbd;
+        }
+        .sign-in-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+    <div class="center-wrapper">
+        <div class="register-container">
+            <h2 class="text-center mb-4">Create an Account</h2>
+            
+            <form method="POST" action="" id="registrationForm" novalidate>
+                
+                {% for f in form %}
+                    {{f}}
+                {% endfor %}
+                    
+                <!-- Terms and Conditions -->
+                <div class="form-check mb-4 text-left">
+                    <input class="form-check-input" type="checkbox" id="terms" required>
+                    <label class="form-check-label" for="terms">
+                        I agree to the <a href="#">terms and conditions</a>
+                    </label>
+                    <div class="invalid-feedback">You must agree to the terms and conditions.</div>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+                <!-- Sign In Link -->
+                <a href="/login" class="sign-in-link text-primary">Already have an account? Sign In</a>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("registrationForm");
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("confirmPassword");
+
+            form.addEventListener("submit", function (event) {
+                // Prevent form submission if there are validation errors
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Check if form is valid
+                if (form.checkValidity() === false) {
+                    form.classList.add("was-validated");
+                } else if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity("Passwords do not match.");
+                    confirmPassword.reportValidity();
+                } else {
+                    // If form is valid and passwords match, proceed with submission
+                    form.submit();
+                }
+            });
+
+            // Clear custom validity when passwords are edited
+            password.addEventListener("input", function () {
+                confirmPassword.setCustomValidity("");
+            });
+            confirmPassword.addEventListener("input", function () {
+                confirmPassword.setCustomValidity("");
+            });
+        });
+    </script>
+
+{% endblock content %}

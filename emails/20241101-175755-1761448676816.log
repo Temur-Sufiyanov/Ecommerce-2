@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: timasettarov@gmail.com
+Date: Fri, 01 Nov 2024 08:57:55 -0000
+Message-ID: <173045147585.16912.9392011510548365651@Temur>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/Mg/cftr8j-c67aa2da6ca8075d304c20563a845d1c/
+
+Your username, in case you’ve forgotten: Temur
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

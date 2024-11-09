@@ -1,0 +1,12 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-success text-center">
+        <h4>Your order has been placed successfully!</h4>
+        <p>Order Number: <strong>{{ order.id }}</strong></p>
+        <p>Total Amount: <strong>$ {{ order.total_amount|floatformat:2 }}</strong></p>
+        <a href="{% url 'order_list' %}" class="btn btn-primary mt-3">View My Orders</a>
+    </div>
+</div>
+{% endblock %}
